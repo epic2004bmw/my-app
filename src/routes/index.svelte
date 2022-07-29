@@ -6,7 +6,7 @@
 	function removeSelf(index) {
 		todos = [...todos.slice(0, index), ...todos.slice(index + 1)];
 	}
-    let todosa = ['Dailies', '5 Bosses', 'Events', 'Clan Event', 'Extra Earnings'];
+	let todosa = ['Dailies', '5 Bosses', 'Events', 'Clan Event', 'Extra Earnings'];
 	function addTodoa() {
 		todosa = [...todosa, ''];
 	}
@@ -21,8 +21,11 @@
 
 <div class="list">
 	{#each todos as todo, index}
-		<input style="font-family:Bradley Hand, cursive;background-color:cornflowerblue" bind:value={todos[index]} />
-		<label for="my-modal" class="btn modal-button" on:click ={removeSelf(index)}>Done</label>
+		<input
+			style="font-family:Bradley Hand, cursive;background-color:cornflowerblue"
+			bind:value={todos[index]}
+		/>
+		<label for="my-modal" class="btn modal-button" on:click={() => removeSelf(index)}>Done</label>
 		<br />
 	{/each}
 	<button on:click={addTodo}>Add</button>
@@ -30,13 +33,13 @@
 
 <input type="checkbox" id="my-modal" class="modal-toggle" />
 <div class="modal">
-  <div class="modal-box">
-    <h3 class="font-bold text-lg">Congratulations!</h3>
-    <p class="py-4">You are one step closer to getting in shape!</p>
-    <div class="modal-action">
-      <label for="my-modal" class="btn">Yay!</label>
-    </div>
-  </div>
+	<div class="modal-box">
+		<h3 class="font-bold text-lg">Congratulations!</h3>
+		<p class="py-4">You are one step closer to getting in shape!</p>
+		<div class="modal-action">
+			<label for="my-modal" class="btn">Yay!</label>
+		</div>
+	</div>
 </div>
 
 <footer>
@@ -64,7 +67,7 @@
 		text-align: center;
 		display: block;
 		margin: 20px auto;
-        font-size: large;
+		font-size: large;
 	}
 	.list {
 		text-align: center;
@@ -83,6 +86,6 @@
 	}
 	footer {
 		text-align: center;
-        font-size: small;
+		font-size: small;
 	}
 </style>
