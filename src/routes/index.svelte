@@ -108,8 +108,7 @@
 								bind:value={todo.title}
 							/>
 							<button
-								for="my-modal"
-								class="btn modal-button"
+								class="btn"
 								on:click={() => completeTodo(todo.todoID)}
 							>
 								Done
