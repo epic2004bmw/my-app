@@ -90,7 +90,7 @@
 </div>
 
 <div class="list">
-	{#each projects as project, index}
+	{#each projects as project, _index}
 		<div class="project">
 			<h2>{project.name}</h2>
 			<ul>
@@ -112,6 +112,13 @@
 								class="btn modal-button"
 								on:click={() => completeTodo(todo.todoID)}>Done</label
 							>
+							<!-- Trash can icon to delete todo -->
+							<label
+								for="my-modal"
+								class="btn modal-button"
+								on:click={() => removeTodo(todo.todoID)}>
+								Delete
+							</label>
 						</li>
 					{/if}
 				{/each}
