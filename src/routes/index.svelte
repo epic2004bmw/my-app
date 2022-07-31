@@ -110,12 +110,15 @@
 							<label
 								for="my-modal"
 								class="btn modal-button"
-								on:click={() => completeTodo(todo.todoID)}>Done</label
-							>
+								 class:modal-open={congratsModalIsOpen}
+								on:click={() => completeTodo(todo.todoID)}>Done
+								</label >
+
 							<!-- Trash can icon to delete todo -->
 							<label
 								for="my-modal"
 								class="btn modal-button"
+								 class:modal-open={congratsModalIsOpen}
 								on:click={() => removeTodo(todo.todoID)}>
 								Delete
 							</label>
@@ -128,7 +131,7 @@
 	{/each}
 </div>
 
-<input type="checkbox" id="my-modal" class="modal-toggle" class:modal-open={congratsModalIsOpen} />
+<input type="checkbox" id="my-modal" class="modal-toggle"/>
 <div class="modal">
 	<div class="modal-box">
 		<h3 class="font-bold text-lg">Congratulations!</h3>
