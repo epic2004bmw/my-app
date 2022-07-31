@@ -117,13 +117,12 @@
 							</label>
 
 							<!-- Trash can icon to delete todo -->
-							<label
-								for="my-modal"
-								class="btn modal-button"
+							<button
+								class="btn"
 								on:click={() => removeTodo(todo.todoID)}
 							>
 								Delete
-							</label>
+							</button>
 						</li>
 					{/if}
 				{/each}
