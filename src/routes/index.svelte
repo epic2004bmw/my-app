@@ -54,24 +54,24 @@
 			completed: false
 		}
 	];
-	function addTodo() {
+	function addTodo(projectID) {
 		todos = [
 			...todos,
 			{
 				todoID: todos.length + 1,
 				title: 'New Todo',
-				projectID: 1,
+				projectID,
 				completed: false
 			}
 		];
 	}
 	async function removeTodo(todoID) {
 		// Remove todo from list
-		todos = todos.filter(todo => todo.todoID !== todoID);
+		todos = todos.filter((todo) => todo.todoID !== todoID);
 	}
-	function completeTodo(todoID){
+	function completeTodo(todoID) {
 		// Mark todo as completed
-		todos = todos.map(todo => {
+		todos = todos.map((todo) => {
 			if (todo.todoID === todoID) {
 				todo.completed = true;
 			}
@@ -81,7 +81,7 @@
 	}
 
 	let congratsModalIsOpen = false;
-	const openCongratsModal = () => ( congratsModalIsOpen = true);
+	const openCongratsModal = () => (congratsModalIsOpen = true);
 	const closeCongratsModal = () => (congratsModalIsOpen = false);
 </script>
 
@@ -90,15 +90,35 @@
 </div>
 
 <div class="list">
-	{#each todos as todo, index}
-		<input
-			style="font-family:Bradley Hand, cursive;background-color:cornflowerblue"
-			bind:value={todos[index]}
-		/>
-		<label for="my-modal" class="btn modal-button" on:click={completeTodo(todo.todoID)}>Done</label>
-		<br />
+	{#each projects as project, index}
+		<div class="project">
+			<h2>{project.name}</h2>
+			<ul>
+				{#each todos as todo}
+					{#if todo.projectID === project.projectID && !todo.completed}
+						<li>
+							<input
+								type="checkbox"
+								bind:value={todo.completed}
+								on:click={() => completeTodo(todo.todoID)}
+							/>
+							<input
+								type="text"
+								style="font-family:Bradley Hand, cursive;background-color:cornflowerblue"
+								bind:value={todo.title}
+							/>
+							<label
+								for="my-modal"
+								class="btn modal-button"
+								on:click={() => completeTodo(todo.todoID)}>Done</label
+							>
+						</li>
+					{/if}
+				{/each}
+			</ul>
+		</div>
+		<button on:click={() => addTodo(project.projectID)}>Add</button>
 	{/each}
-	<button on:click={addTodo}>Add</button>
 </div>
 
 <input type="checkbox" id="my-modal" class="modal-toggle" class:modal-open={congratsModalIsOpen} />
@@ -112,7 +132,7 @@
 	</div>
 </div>
 
-<footer>
+<!-- <footer>
 	<h2>Get back into shape!</h2>
 </footer>
 
@@ -127,8 +147,7 @@
 		<br />
 	{/each}
 	<button on:click={addTodoa}>Add</button>
-</div>
-
+</div> -->
 <style>
 	.todos {
 		font-size: 44;
