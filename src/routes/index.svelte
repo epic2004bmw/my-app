@@ -110,7 +110,6 @@
 							<label
 								for="my-modal"
 								class="btn modal-button"
-								 class:modal-open={congratsModalIsOpen}
 								on:click={() => completeTodo(todo.todoID)}>Done
 								</label >
 
@@ -118,7 +117,6 @@
 							<label
 								for="my-modal"
 								class="btn modal-button"
-								 class:modal-open={congratsModalIsOpen}
 								on:click={() => removeTodo(todo.todoID)}>
 								Delete
 							</label>
@@ -131,7 +129,7 @@
 	{/each}
 </div>
 
-<input type="checkbox" id="my-modal" class="modal-toggle"/>
+<input type="checkbox" id="my-modal" class="modal-toggle" bind:checked={congratsModalIsOpen}/>
 <div class="modal">
 	<div class="modal-box">
 		<h3 class="font-bold text-lg">Congratulations!</h3>
