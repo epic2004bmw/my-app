@@ -68,6 +68,7 @@
 	async function removeTodo(todoID) {
 		// Remove todo from list
 		todos = todos.filter((todo) => todo.todoID !== todoID);
+		openCongratsModal();
 	}
 	function completeTodo(todoID) {
 		// Mark todo as completed
@@ -80,9 +81,9 @@
 		openCongratsModal();
 	}
 
-	let congratsModalIsOpen = false;
-	const openCongratsModal = () => (congratsModalIsOpen = true);
-	const closeCongratsModal = () => (congratsModalIsOpen = false);
+	let isCongratsModalOpen = false;
+	const openCongratsModal = () => (isCongratsModalOpen = true);
+	const closeCongratsModal = () => (isCongratsModalOpen = false);
 </script>
 
 <div class="Title">
@@ -110,14 +111,17 @@
 							<label
 								for="my-modal"
 								class="btn modal-button"
-								on:click={() => completeTodo(todo.todoID)}>Done
-								</label >
+								on:click={() => completeTodo(todo.todoID)}
+							>
+								Done
+							</label>
 
 							<!-- Trash can icon to delete todo -->
 							<label
 								for="my-modal"
 								class="btn modal-button"
-								on:click={() => removeTodo(todo.todoID)}>
+								on:click={() => removeTodo(todo.todoID)}
+							>
 								Delete
 							</label>
 						</li>
@@ -129,13 +133,13 @@
 	{/each}
 </div>
 
-<input type="checkbox" id="my-modal" class="modal-toggle" bind:checked={congratsModalIsOpen}/>
-<div class="modal">
+<input type="checkbox" id="my-modal" class="modal-toggle" bind:checked={isCongratsModalOpen} />
+<div class="modal" on:click|self={closeCongratsModal}>
 	<div class="modal-box">
 		<h3 class="font-bold text-lg">Congratulations!</h3>
 		<p class="py-4">You are one step closer to getting in shape!</p>
 		<div class="modal-action">
-			<label for="my-modal" class="btn" on:click={closeCongratsModal}>Yay!</label>
+			<label for="my-modal" class="btn">Yay!</label>
 		</div>
 	</div>
 </div>
