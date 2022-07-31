@@ -1,29 +1,88 @@
 <script>
-	import { tick } from 'svelte';
-	let congratsModalIsOpen = false;
-	const openCongratsModal = () => {
-		congratsModalIsOpen = true;
-		console.log(congratsModalIsOpen);
-	};
-	const closeCongratsModal = () => (congratsModalIsOpen = false);
-	let todos = ['30 situps', '20 pushups', '5 pull ups'];
+	let projects = [
+		{ projectID: 1, name: 'Archero' },
+		{ projectID: 2, name: 'TodoA' }
+	];
+
+	let todos = [
+		{
+			todoID: 1,
+			title: '30 situps',
+			projectID: 1,
+			completed: false
+		},
+		{
+			todoID: 2,
+			title: '20 pushups',
+			projectID: 1,
+			completed: false
+		},
+		{
+			todoID: 3,
+			title: '5 pull ups',
+			projectID: 1,
+			completed: false
+		},
+		{
+			todoID: 4,
+			title: 'Dailies',
+			projectID: 2,
+			completed: false
+		},
+		{
+			todoID: 5,
+			title: '5 Bosses',
+			projectID: 2,
+			completed: false
+		},
+		{
+			todoID: 6,
+			title: 'Events',
+			projectID: 2,
+			completed: false
+		},
+		{
+			todoID: 7,
+			title: 'Clan Event',
+			projectID: 2,
+			completed: false
+		},
+		{
+			todoID: 8,
+			title: 'Extra Earnings',
+			projectID: 2,
+			completed: false
+		}
+	];
 	function addTodo() {
-		todos = [...todos, ''];
+		todos = [
+			...todos,
+			{
+				todoID: todos.length + 1,
+				title: 'New Todo',
+				projectID: 1,
+				completed: false
+			}
+		];
 	}
-	async function removeSelf(index) {
-		todos = [...todos.slice(0, index), ...todos.slice(index + 1)];
-		await tick();
+	async function removeTodo(todoID) {
+		// Remove todo from list
+		todos = todos.filter(todo => todo.todoID !== todoID);
+	}
+	function completeTodo(todoID){
+		// Mark todo as completed
+		todos = todos.map(todo => {
+			if (todo.todoID === todoID) {
+				todo.completed = true;
+			}
+			return todo;
+		});
 		openCongratsModal();
 	}
-	let todosa = ['Dailies', '5 Bosses', 'Events', 'Clan Event', 'Extra Earnings'];
-	function addTodoa() {
-		todosa = [...todosa, ''];
-	}
-	async function removeSelfa(index) {
-		todosa = [...todosa.slice(0, index), ...todosa.slice(index + 1)];
-		await tick();
-		openCongratsModal();
-	}
+
+	let congratsModalIsOpen = false;
+	const openCongratsModal = () => ( congratsModalIsOpen = true);
+	const closeCongratsModal = () => (congratsModalIsOpen = false);
 </script>
 
 <div class="Title">
@@ -36,7 +95,7 @@
 			style="font-family:Bradley Hand, cursive;background-color:cornflowerblue"
 			bind:value={todos[index]}
 		/>
-		<label for="my-modal" class="btn modal-button" on:click={() => removeSelf(index)}>Done</label>
+		<label for="my-modal" class="btn modal-button" on:click={completeTodo(todo.todoID)}>Done</label>
 		<br />
 	{/each}
 	<button on:click={addTodo}>Add</button>
