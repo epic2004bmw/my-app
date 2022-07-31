@@ -68,7 +68,6 @@
 	async function removeTodo(todoID) {
 		// Remove todo from list
 		todos = todos.filter((todo) => todo.todoID !== todoID);
-		openCongratsModal();
 	}
 	function completeTodo(todoID) {
 		// Mark todo as completed
@@ -108,13 +107,13 @@
 								style="font-family:Bradley Hand, cursive;background-color:cornflowerblue"
 								bind:value={todo.title}
 							/>
-							<label
+							<button
 								for="my-modal"
 								class="btn modal-button"
 								on:click={() => completeTodo(todo.todoID)}
 							>
 								Done
-							</label>
+							</button>
 
 							<button
 								class="btn"
