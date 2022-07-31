@@ -116,7 +116,6 @@
 								Done
 							</label>
 
-							<!-- Trash can icon to delete todo -->
 							<button
 								class="btn"
 								on:click={() => removeTodo(todo.todoID)}
