@@ -1,17 +1,28 @@
 <script>
+	import { tick } from 'svelte';
+	let congratsModalIsOpen = false;
+	const openCongratsModal = () => {
+		congratsModalIsOpen = true;
+		console.log(congratsModalIsOpen);
+	};
+	const closeCongratsModal = () => (congratsModalIsOpen = false);
 	let todos = ['30 situps', '20 pushups', '5 pull ups'];
 	function addTodo() {
 		todos = [...todos, ''];
 	}
-	function removeSelf(index) {
+	async function removeSelf(index) {
 		todos = [...todos.slice(0, index), ...todos.slice(index + 1)];
+		await tick();
+		openCongratsModal();
 	}
 	let todosa = ['Dailies', '5 Bosses', 'Events', 'Clan Event', 'Extra Earnings'];
 	function addTodoa() {
 		todosa = [...todosa, ''];
 	}
-	function removeSelfa(index) {
+	async function removeSelfa(index) {
 		todosa = [...todosa.slice(0, index), ...todosa.slice(index + 1)];
+		await tick();
+		openCongratsModal();
 	}
 </script>
 
@@ -31,13 +42,13 @@
 	<button on:click={addTodo}>Add</button>
 </div>
 
-<input type="checkbox" id="my-modal" class="modal-toggle" />
+<input type="checkbox" id="my-modal" class="modal-toggle" class:modal-open={congratsModalIsOpen} />
 <div class="modal">
 	<div class="modal-box">
 		<h3 class="font-bold text-lg">Congratulations!</h3>
 		<p class="py-4">You are one step closer to getting in shape!</p>
 		<div class="modal-action">
-			<label for="my-modal" class="btn">Yay!</label>
+			<label for="my-modal" class="btn" on:click={closeCongratsModal}>Yay!</label>
 		</div>
 	</div>
 </div>
