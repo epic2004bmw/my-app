@@ -1,18 +1,88 @@
 <script>
-	let todos = ['30 situps', '20 pushups', '5 pull ups'];
-	function addTodo() {
-		todos = [...todos, ''];
+	let projects = [
+		{ projectID: 1, name: 'Archero' },
+		{ projectID: 2, name: 'TodoA' }
+	];
+
+	let todos = [
+		{
+			todoID: 1,
+			title: '30 situps',
+			projectID: 1,
+			completed: false
+		},
+		{
+			todoID: 2,
+			title: '20 pushups',
+			projectID: 1,
+			completed: false
+		},
+		{
+			todoID: 3,
+			title: '5 pull ups',
+			projectID: 1,
+			completed: false
+		},
+		{
+			todoID: 4,
+			title: 'Dailies',
+			projectID: 2,
+			completed: false
+		},
+		{
+			todoID: 5,
+			title: '5 Bosses',
+			projectID: 2,
+			completed: false
+		},
+		{
+			todoID: 6,
+			title: 'Events',
+			projectID: 2,
+			completed: false
+		},
+		{
+			todoID: 7,
+			title: 'Clan Event',
+			projectID: 2,
+			completed: false
+		},
+		{
+			todoID: 8,
+			title: 'Extra Earnings',
+			projectID: 2,
+			completed: false
+		}
+	];
+	function addTodo(projectID) {
+		todos = [
+			...todos,
+			{
+				todoID: todos.length + 1,
+				title: 'New Todo',
+				projectID,
+				completed: false
+			}
+		];
 	}
-	function removeSelf(index) {
-		todos = [...todos.slice(0, index), ...todos.slice(index + 1)];
+	async function removeTodo(todoID) {
+		// Remove todo from list
+		todos = todos.filter((todo) => todo.todoID !== todoID);
 	}
-    let todosa = ['Dailies', '5 Bosses', 'Events', 'Clan Event', 'Extra Earnings'];
-	function addTodoa() {
-		todosa = [...todosa, ''];
+	function completeTodo(todoID) {
+		// Mark todo as completed
+		todos = todos.map((todo) => {
+			if (todo.todoID === todoID) {
+				todo.completed = true;
+			}
+			return todo;
+		});
+		openCongratsModal();
 	}
-	function removeSelfa(index) {
-		todosa = [...todosa.slice(0, index), ...todosa.slice(index + 1)];
-	}
+
+	let isCongratsModalOpen = false;
+	const openCongratsModal = () => (isCongratsModalOpen = true);
+	const closeCongratsModal = () => (isCongratsModalOpen = false);
 </script>
 
 <div class="Title">
@@ -20,26 +90,57 @@
 </div>
 
 <div class="list">
-	{#each todos as todo, index}
-		<input style="font-family:Bradley Hand, cursive;background-color:cornflowerblue" bind:value={todos[index]} />
-		<label for="my-modal" class="btn modal-button" on:click ={removeSelf(index)}>Done</label>
-		<br />
+	{#each projects as project, _index}
+		<div class="project">
+			<h2>{project.name}</h2>
+			<ul>
+				{#each todos as todo}
+					{#if todo.projectID === project.projectID && !todo.completed}
+						<li>
+							<input
+								type="checkbox"
+								bind:value={todo.completed}
+								on:click={() => completeTodo(todo.todoID)}
+							/>
+							<input
+								type="text"
+								style="font-family:Bradley Hand, cursive;background-color:cornflowerblue"
+								bind:value={todo.title}
+							/>
+							<button
+								class="btn"
+								on:click={() => completeTodo(todo.todoID)}
+							>
+								Done
+							</button>
+
+							<button
+								class="btn"
+								on:click={() => removeTodo(todo.todoID)}
+							>
+								Delete
+							</button>
+						</li>
+					{/if}
+				{/each}
+			</ul>
+		</div>
+		<button on:click={() => addTodo(project.projectID)}>Add</button>
 	{/each}
-	<button on:click={addTodo}>Add</button>
 </div>
 
-<input type="checkbox" id="my-modal" class="modal-toggle" />
-<div class="modal">
-  <div class="modal-box">
-    <h3 class="font-bold text-lg">Congratulations!</h3>
-    <p class="py-4">You are one step closer to getting in shape!</p>
-    <div class="modal-action">
-      <label for="my-modal" class="btn">Yay!</label>
-    </div>
-  </div>
+<input type="checkbox" id="my-modal" class="modal-toggle" bind:checked={isCongratsModalOpen} />
+<div class="modal" on:click|self={closeCongratsModal}>
+	<div class="modal-box">
+		<h3 class="font-bold text-lg">Congratulations!</h3>
+		<p class="py-4">You are one step closer to getting in shape!</p>
+		<div class="modal-action">
+			<label for="my-modal" class="btn">Yay!</label>
+		</div>
+	</div>
 </div>
 
-<footer>
+<!-- <footer>
 	<h2>Get back into shape!</h2>
 </footer>
 
@@ -54,8 +155,7 @@
 		<br />
 	{/each}
 	<button on:click={addTodoa}>Add</button>
-</div>
-
+</div> -->
 <style>
 	.todos {
 		font-size: 44;
@@ -64,7 +164,7 @@
 		text-align: center;
 		display: block;
 		margin: 20px auto;
-        font-size: large;
+		font-size: large;
 	}
 	.list {
 		text-align: center;
@@ -83,6 +183,6 @@
 	}
 	footer {
 		text-align: center;
-        font-size: small;
+		font-size: small;
 	}
 </style>
